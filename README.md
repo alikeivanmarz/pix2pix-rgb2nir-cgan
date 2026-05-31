@@ -7,6 +7,17 @@ The repository includes training, evaluation, and single-image inference tools.
 The trained generator is distributed through GitHub Releases so the git
 repository stays lightweight.
 
+## Publication
+
+This implementation accompanies:
+
+Keivanmarz, A., and Sharifzadeh, H. (2024). Vein pattern visualisation for
+biometric identification with cGAN on a New Zealand dataset. Forensic Science
+International, 359, 112050.
+
+- DOI: https://doi.org/10.1016/j.forsciint.2024.112050
+- ScienceDirect: https://www.sciencedirect.com/science/article/pii/S0379073824001312
+
 ## Install
 
 ```bash
@@ -77,10 +88,11 @@ python scripts/predict_image.py \
 - Objective: reconstruction-dominant pix2pix loss, `100 * L1 + adversarial`
 - Input size: 128x128
 - Tensor range: `[-1, 1]`
+- Vein visualisation: Sato vesselness maps from predicted and paired NIR crops
 
 ## Results
 
-Final evaluation on the participant-disjoint test split:
+Paired image metrics on the participant-disjoint test split:
 
 | Metric | Value |
 | --- | ---: |
@@ -88,14 +100,19 @@ Final evaluation on the participant-disjoint test split:
 | RMSE | 0.0519 |
 | PSNR | 27.7760 |
 | SSIM | 0.9009 |
-| Vessel correlation | 0.0722 |
-| Vessel Dice | 0.1151 |
-| Vessel IoU | 0.0620 |
-| Skeleton F1 | 0.0702 |
+
+Sato vein-map evaluation check on 512 test crops:
+
+| Metric | Value |
+| --- | ---: |
+| Vessel correlation | 0.6466 |
+| Vessel Dice | 0.5955 |
+| Vessel IoU | 0.4458 |
+| Skeleton F1 | 0.1438 |
 
 Example qualitative grid:
 
-![Prediction grid](assets/sample_grids/prediction_grid_best_test.png)
+![RGB to NIR prediction grid with Sato vein maps](assets/sample_grids/provided_samples_compact_page_01.png)
 
 ## Train
 

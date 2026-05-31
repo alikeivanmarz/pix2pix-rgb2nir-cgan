@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from rgb2nir_pix2pix.config import load_config
 from rgb2nir_pix2pix.dataset import make_dataloader
 from rgb2nir_pix2pix.train import load_generator_from_checkpoint
-from rgb2nir_pix2pix.utils import append_journal, select_device
+from rgb2nir_pix2pix.utils import select_device
 from rgb2nir_pix2pix.visualize import save_prediction_grid
 
 
@@ -69,7 +69,6 @@ def main() -> None:
         vessel_sigmas=list(cfg.get("evaluation", "vessel_sigmas", [1, 2, 3])),
         vessel_threshold=float(cfg.get("evaluation", "vessel_threshold", 0.15)),
     )
-    append_journal(cfg.project_root, f"Prediction grid exported: {output}")
     print(output)
 
 

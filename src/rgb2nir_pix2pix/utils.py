@@ -8,7 +8,6 @@ import platform
 import random
 import subprocess
 import sys
-import time
 from pathlib import Path
 from typing import Any
 
@@ -33,10 +32,6 @@ def select_device(preferred: str) -> torch.device:
     return torch.device("cpu")
 
 
-def now_stamp() -> str:
-    return time.strftime("%Y%m%d-%H%M%S")
-
-
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
@@ -47,12 +42,6 @@ def write_yaml(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         yaml.safe_dump(payload, f, sort_keys=False)
-
-
-def append_journal(project_root: Path, message: str) -> None:
-    path = project_root / "JOURNAL.md"
-    with path.open("a", encoding="utf-8") as f:
-        f.write(f"\n- {time.strftime('%Y-%m-%d %H:%M:%S')} - {message}\n")
 
 
 def command_string() -> str:
@@ -93,4 +82,3 @@ class AverageMeter:
     @property
     def avg(self) -> float:
         return self.total / max(self.count, 1)
-

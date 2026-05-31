@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gate 1: build and validate selected/clean-only manifests."""
+"""Build and validate selected/clean-only manifests."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from rgb2nir_pix2pix.config import ensure_project_dirs, load_config
 from rgb2nir_pix2pix.manifest import discover_pairs, validate_manifest, write_manifest_files
-from rgb2nir_pix2pix.utils import append_journal, write_json
+from rgb2nir_pix2pix.utils import write_json
 
 
 def parse_args() -> argparse.Namespace:
@@ -57,10 +57,8 @@ def main() -> None:
             f.write(f"- {key}: `{value}`\n")
         f.write("\n## Audit\n\n")
         f.write(f"```json\n{json.dumps(audit, indent=2, sort_keys=True)}\n```\n")
-    append_journal(cfg.project_root, f"Gate 1 complete: selected/clean manifest validated with {summary['crop_pairs']} crop pairs.")
     print(json.dumps(payload, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
     main()
-

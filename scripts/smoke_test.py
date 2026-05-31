@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gate 2: dataloader and visual smoke test."""
+"""Run a dataloader and visual smoke test."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from rgb2nir_pix2pix.config import load_config
 from rgb2nir_pix2pix.dataset import make_dataloader
-from rgb2nir_pix2pix.utils import append_journal, set_seed, write_json
+from rgb2nir_pix2pix.utils import set_seed, write_json
 from rgb2nir_pix2pix.visualize import save_prediction_grid
 
 
@@ -63,14 +63,13 @@ def main() -> None:
     if checks["batch_nir_shape"][1:] != [1, 128, 128]:
         raise ValueError(checks)
     save_prediction_grid(
-        ROOT / "sample_grids" / "gate2_smoke_rgb_nir_grid.png",
+        ROOT / "sample_grids" / "smoke_rgb_nir_grid.png",
         rgb,
         nir,
         nir,
         max_items=min(8, rgb.shape[0]),
     )
-    write_json(ROOT / "reports" / "gate2_smoke_test.json", checks)
-    append_journal(cfg.project_root, "Gate 2 complete: dataloader smoke test passed and sample grid exported.")
+    write_json(ROOT / "reports" / "smoke_test.json", checks)
     print(json.dumps(checks, indent=2, sort_keys=True))
 
 

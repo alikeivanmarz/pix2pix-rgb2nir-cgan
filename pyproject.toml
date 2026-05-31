@@ -8,6 +8,10 @@ version = "0.1.0"
 description = "Pix2Pix cGAN for RGB-to-NIR skin crop translation."
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+  { name = "Ali Keivanmarz" },
+  { name = "Hamid Sharifzadeh" },
+]
 dependencies = [
   "numpy",
   "pandas",
@@ -21,6 +25,11 @@ dependencies = [
   "opencv-python-headless",
   "safetensors",
 ]
+
+[project.urls]
+Repository = "https://github.com/alikeivanmarz/pix2pix-rgb2nir-cgan"
+Publication = "https://doi.org/10.1016/j.forsciint.2024.112050"
+ScienceDirect = "https://www.sciencedirect.com/science/article/pii/S0379073824001312"
 
 [tool.setuptools.packages.find]
 where = ["src"]

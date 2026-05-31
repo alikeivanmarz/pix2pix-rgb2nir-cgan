@@ -12,13 +12,12 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from rgb2nir_pix2pix.config import load_config
 from rgb2nir_pix2pix.train import train_pix2pix
-from rgb2nir_pix2pix.utils import append_journal
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=ROOT / "configs" / "pix2pix_mps.yaml")
-    parser.add_argument("--run-name", type=str, default="pilot")
+    parser.add_argument("--run-name", type=str, default="pix2pix_run")
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--max-steps", type=int)
     parser.add_argument("--max-train-samples", type=int)
@@ -37,10 +36,8 @@ def main() -> None:
         max_train_samples=args.max_train_samples,
         max_eval_samples=args.max_eval_samples,
     )
-    append_journal(cfg.project_root, f"Training run complete: {args.run_name} -> {run_dir}")
     print(run_dir)
 
 
 if __name__ == "__main__":
     main()
-

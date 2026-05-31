@@ -13,7 +13,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from rgb2nir_pix2pix.config import load_config
-from rgb2nir_pix2pix.utils import append_journal
 
 
 def parse_args() -> argparse.Namespace:
@@ -83,10 +82,8 @@ def main() -> None:
         for image in sorted((run_dir / "samples").glob("*.png")):
             f.write(f"- `{image.relative_to(run_dir)}`\n")
         f.write("\n## Notes\n\n")
-        f.write("- This run uses only `data/crops/selected/clean/`.\n")
         f.write("- The model is a reconstruction-dominant pix2pix cGAN.\n")
-        f.write("- GAN realism must not be treated as proof of real vein correctness.\n")
-    append_journal(cfg.project_root, f"Report generated for {run_dir.name}: {output}")
+        f.write("- Sato vein maps are used for qualitative vein-pattern visualisation.\n")
     print(output)
 
 

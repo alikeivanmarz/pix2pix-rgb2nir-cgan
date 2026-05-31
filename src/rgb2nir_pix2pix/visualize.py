@@ -9,7 +9,7 @@ import numpy as np
 import torch
 
 from .dataset import tensor_to_unit
-from .metrics import vesselness_map
+from .metrics import vessel_mask, vesselness_map
 
 
 def save_prediction_grid(
@@ -34,9 +34,9 @@ def save_prediction_grid(
         "Pred NIR",
         "Real NIR",
         "Abs Error",
-        "Pred Vessel",
-        "Real Vessel",
-        "Overlay",
+        "Pred Sato Vein Map",
+        "Real Sato Vein Map",
+        "Vein Overlay",
     ]
     for col, title in enumerate(titles):
         axes[0][col].set_title(title, fontsize=9)
@@ -47,8 +47,8 @@ def save_prediction_grid(
         error = np.abs(pred - target)
         pred_v = vesselness_map(pred, vessel_sigmas)
         target_v = vesselness_map(target, vessel_sigmas)
-        pred_m = pred_v >= vessel_threshold
-        target_m = target_v >= vessel_threshold
+        pred_m = vessel_mask(pred_v, vessel_threshold)
+        target_m = vessel_mask(target_v, vessel_threshold)
         overlay = np.zeros((pred.shape[0], pred.shape[1], 3), dtype=np.float32)
         overlay[..., 1] = np.logical_and(pred_m, target_m)
         overlay[..., 0] = np.logical_and(pred_m, ~target_m)
@@ -61,4 +61,3 @@ def save_prediction_grid(
     fig.tight_layout()
     fig.savefig(path, dpi=160)
     plt.close(fig)
-

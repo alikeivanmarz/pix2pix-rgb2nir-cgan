@@ -67,5 +67,5 @@ evaluation:
   batch_size: 16
   max_samples:
   vessel_sigmas: [1, 2, 3]
-  vessel_threshold: 0.197265625
+  vessel_threshold: 0.322265625
   ssim_sample_limit:
