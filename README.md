@@ -18,6 +18,14 @@ International, 359, 112050.
 - DOI: https://doi.org/10.1016/j.forsciint.2024.112050
 - ScienceDirect: https://www.sciencedirect.com/science/article/pii/S0379073824001312
 
+## Data Availability
+
+The RGB/NIR dataset used in this work is available upon reasonable research
+request. For access enquiries, please contact:
+
+- Hamid Sharifzadeh: hsharifzadeh@unitec.ac.nz
+- Ali Keivanmarz: akeivanmarz@unitec.ac.nz
+
 ## Install
 
 ```bash
