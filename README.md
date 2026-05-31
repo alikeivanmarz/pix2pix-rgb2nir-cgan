@@ -52,8 +52,10 @@ python scripts/download_weights.py --variant fp16
 
 ## Predict One Image
 
-Input images are expected to be RGB skin crops. Images are resized to 128x128 by
-default before inference.
+Input images should be RGB skin crops, preferably square crops of hand or
+forearm skin. The script accepts common image formats supported by Pillow, such
+as PNG, JPEG, TIFF, BMP, and WebP. Images are converted to RGB and resized to
+128x128 by default before inference.
 
 ```bash
 python scripts/predict_image.py \
@@ -80,6 +82,19 @@ python scripts/predict_image.py \
   --input path/to/rgb_crop.png \
   --output outputs/nir_prediction.png
 ```
+
+Use an exact 128x128 input without resizing:
+
+```bash
+python scripts/predict_image.py \
+  --weights weights/rgb2nir-pix2pix-generator-fp32.safetensors \
+  --input path/to/rgb_crop_128.png \
+  --output outputs/nir_prediction.png \
+  --no-resize
+```
+
+See [docs/inference.md](docs/inference.md) for input preparation, supported
+formats, output details, and troubleshooting.
 
 ## Model
 

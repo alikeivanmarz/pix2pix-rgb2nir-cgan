@@ -17,17 +17,39 @@ from rgb2nir_pix2pix.utils import select_device
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--weights", type=Path, required=True)
-    parser.add_argument("--input", type=Path, required=True)
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--device", default="auto", choices=["auto", "cpu", "mps", "cuda"])
-    parser.add_argument("--image-size", type=int, default=128)
-    parser.add_argument("--generator-type", default="transposed")
-    parser.add_argument("--generator-base", type=int, default=64)
-    parser.add_argument("--discriminator-base", type=int, default=64)
-    parser.add_argument("--dropout", type=float, default=0.5)
-    parser.add_argument("--no-resize", action="store_true")
+    parser = argparse.ArgumentParser(
+        description="Predict a NIR-like grayscale image from one RGB skin crop.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("--weights", type=Path, required=True, help="Path to generator weights.")
+    parser.add_argument("--input", type=Path, required=True, help="Input image path.")
+    parser.add_argument("--output", type=Path, required=True, help="Output grayscale PNG path.")
+    parser.add_argument(
+        "--device",
+        default="auto",
+        choices=["auto", "cpu", "mps", "cuda"],
+        help="Inference device.",
+    )
+    parser.add_argument("--image-size", type=int, default=128, help="Model input size.")
+    parser.add_argument("--generator-type", default="transposed", help="Generator architecture variant.")
+    parser.add_argument("--generator-base", type=int, default=64, help="Generator base channel count.")
+    parser.add_argument(
+        "--discriminator-base",
+        type=int,
+        default=64,
+        help="Discriminator base channel count.",
+    )
+    parser.add_argument(
+        "--dropout",
+        type=float,
+        default=0.5,
+        help="Generator dropout value used at model construction.",
+    )
+    parser.add_argument(
+        "--no-resize",
+        action="store_true",
+        help="Require the input to already match --image-size.",
+    )
     return parser.parse_args()
 
 
