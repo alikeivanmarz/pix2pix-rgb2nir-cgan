@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
+# Local data and generated outputs
+/data/
+/manifests/
+/runs/
+/logs/
+/sample_grids/
+/outputs/
+
+# Large model artifacts are published through GitHub Releases, not git.
+weights/
+release_assets/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Keep curated public assets and reports.
+!assets/sample_grids/*.png
+!reports/*.json
+!reports/*.csv
+!reports/*.md

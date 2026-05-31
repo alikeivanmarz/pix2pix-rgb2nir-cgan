@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: Pix2Pix RGB-to-NIR cGAN
+message: If you use this software, please cite this repository.
+type: software
+authors:
+  - family-names: Marz
+    given-names: Alike Ivan
+repository-code: https://github.com/alikeivanmarz/pix2pix-rgb2nir-cgan
+version: 0.1.0
+date-released: 2026-06-01

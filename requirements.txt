@@ -1,0 +1,11 @@
+numpy
+pandas
+Pillow
+PyYAML
+tqdm
+torch
+torchvision
+scikit-image
+matplotlib
+opencv-python-headless
+safetensors

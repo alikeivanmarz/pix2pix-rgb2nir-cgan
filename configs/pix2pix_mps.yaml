@@ -1,0 +1,71 @@
+project:
+  name: pix2pix-rgb2nir-cgan
+  seed: 20260531
+
+paths:
+  project_root: .
+  crop_root: data/crops/selected/clean
+  manifest_csv: manifests/selected_clean_manifest.csv
+  train_csv: manifests/train_selected_clean.csv
+  train_fit_csv: manifests/train_fit_selected_clean.csv
+  val_csv: manifests/val_selected_clean.csv
+  test_csv: manifests/test_selected_clean.csv
+  participant_split_csv: manifests/participant_split_selected_clean.csv
+  manifest_summary_md: manifests/MANIFEST_SUMMARY.md
+  runs_dir: runs
+  reports_dir: reports
+  sample_grids_dir: sample_grids
+
+data:
+  source_scope: selected_clean_only
+  train_fraction: 0.8
+  validation_fraction: 0.1
+  image_size: 128
+  batch_size: 8
+  num_workers: 0
+  pin_memory: false
+  persistent_workers: false
+  max_train_samples:
+  max_eval_samples:
+
+augmentation:
+  horizontal_flip: true
+  vertical_flip: false
+  rotate_90: false
+  rgb_brightness: 0.08
+  rgb_contrast: 0.08
+  rgb_noise_std: 0.01
+
+model:
+  generator_type: transposed
+  generator_base_channels: 64
+  discriminator_base_channels: 64
+  dropout: 0.5
+
+loss:
+  lambda_l1: 100.0
+  adversarial: bce
+
+train:
+  device: mps
+  epochs: 12
+  learning_rate: 0.0002
+  beta1: 0.5
+  beta2: 0.999
+  max_steps:
+  eval_every_epochs: 1
+  sample_every_epochs: 1
+  checkpoint_every_epochs: 1
+  eval_samples_per_epoch:
+  include_vessel_metrics: true
+  early_stopping_min_epochs: 8
+  early_stopping_patience: 4
+  early_stopping_min_delta: 0.000001
+  sample_grid_count: 8
+
+evaluation:
+  batch_size: 16
+  max_samples:
+  vessel_sigmas: [1, 2, 3]
+  vessel_threshold: 0.197265625
+  ssim_sample_limit:
