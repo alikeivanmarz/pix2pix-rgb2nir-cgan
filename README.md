@@ -108,30 +108,49 @@ formats, output details, and troubleshooting.
 
 - Generator: U-Net, RGB input to single-channel NIR-like output
 - Discriminator: 70x70 PatchGAN
-- Objective: reconstruction-dominant pix2pix loss, `100 * L1 + adversarial`
+- Objective: BCE adversarial loss plus `100 * L1`
 - Input size: 128x128
 - Tensor range: `[-1, 1]`
 - Vein visualisation: Sato vesselness maps from predicted and paired NIR crops
+- Detail, vessel, and high-pass loss hooks are available in code; the released
+  config keeps those lambdas at `0.0`.
 
 ## Results
 
-Paired image metrics on the participant-disjoint test split:
+Evaluation uses the released fp32 generator weights and the full
+participant-disjoint selected-clean test split: 19,323 crops from 45 subjects.
+Full provenance, manifest hashes, baselines, and per-subject results are in
+[reports/reproducible_evaluation/evaluation_summary.md](reports/reproducible_evaluation/evaluation_summary.md).
 
-| Metric | Value |
-| --- | ---: |
-| MAE | 0.0464 |
-| RMSE | 0.0519 |
-| PSNR | 27.7760 |
-| SSIM | 0.9009 |
+Crop-level mean metrics:
 
-Sato vein-map evaluation check on 512 test crops:
+| Method | MAE | RMSE | PSNR | SSIM |
+| --- | ---: | ---: | ---: | ---: |
+| pix2pix cGAN | 0.0464 | 0.0519 | 27.7760 | 0.9009 |
+| mean/std luminance baseline | 0.0744 | 0.0829 | 23.0867 | 0.8884 |
+| RGB luminance baseline | 0.2159 | 0.2204 | 14.5618 | 0.8043 |
+| green-channel baseline | 0.2689 | 0.2733 | 12.1283 | 0.7556 |
+| train-mean NIR baseline | 0.0885 | 0.0993 | 21.1980 | 0.8890 |
 
-| Metric | Value |
-| --- | ---: |
-| Vessel correlation | 0.6466 |
-| Vessel Dice | 0.5955 |
-| Vessel IoU | 0.4458 |
-| Skeleton F1 | 0.1438 |
+Subject-averaged metrics:
+
+| Method | Subjects | MAE | RMSE | PSNR | SSIM |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| pix2pix cGAN | 45 | 0.0460 | 0.0510 | 27.7686 | 0.9032 |
+| mean/std luminance baseline | 45 | 0.0730 | 0.0813 | 23.2546 | 0.8885 |
+| RGB luminance baseline | 45 | 0.2114 | 0.2159 | 14.7263 | 0.8087 |
+| green-channel baseline | 45 | 0.2645 | 0.2688 | 12.2677 | 0.7607 |
+| train-mean NIR baseline | 45 | 0.0853 | 0.0960 | 21.4508 | 0.8910 |
+
+Full-test Sato vein-map metrics:
+
+| Method | Vessel corr | Vessel Dice | Vessel IoU | Skeleton F1 |
+| --- | ---: | ---: | ---: | ---: |
+| pix2pix cGAN | 0.5074 | 0.5026 | 0.3509 | 0.1187 |
+| mean/std luminance baseline | 0.3983 | 0.4304 | 0.2846 | 0.0936 |
+| RGB luminance baseline | 0.3983 | 0.4304 | 0.2846 | 0.0936 |
+| green-channel baseline | 0.3219 | 0.3858 | 0.2490 | 0.0824 |
+| train-mean NIR baseline | 0.1084 | 0.1872 | 0.1085 | 0.0737 |
 
 Example qualitative grid:
 
@@ -155,6 +174,21 @@ python scripts/train_pix2pix.py \
 ```
 
 ## Evaluate
+
+Reproduce the benchmark tables with release weights, train/test manifests, and
+baseline comparisons:
+
+```bash
+python scripts/evaluate_benchmarks.py \
+  --weights weights/rgb2nir-pix2pix-generator-fp32.safetensors \
+  --train-csv manifests/train_fit_selected_clean.csv \
+  --test-csv manifests/test_selected_clean.csv \
+  --crop-root data/crops/selected/clean \
+  --output-dir reports/reproducible_evaluation \
+  --include-vein
+```
+
+For direct checkpoint evaluation without baselines:
 
 ```bash
 python scripts/evaluate_pix2pix.py \
