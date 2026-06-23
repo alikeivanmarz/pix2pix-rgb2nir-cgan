@@ -1,0 +1,18 @@
+{
+  "group": "overall",
+  "paired_image_full_test": {
+    "mae": 0.04641266235927391,
+    "n": 19323,
+    "psnr": 27.77600629745605,
+    "rmse": 0.05187741960187855,
+    "ssim": 0.9008792126590544
+  },
+  "sato_vein_map_512_test_check": {
+    "n": 512,
+    "skeleton_f1": 0.14381676101273266,
+    "vessel_corr": 0.6466403374370889,
+    "vessel_dice": 0.5954690923592629,
+    "vessel_iou": 0.4458423863566989,
+    "vessel_length_ratio": 0.9191497569874456
+  }
+}
